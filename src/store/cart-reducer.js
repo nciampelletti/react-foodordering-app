@@ -1,5 +1,3 @@
-import React from "react"
-
 const CartReducer = (state, action) => {
   if (action.type === "ADD") {
     const updatedTotalAmount =

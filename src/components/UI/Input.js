@@ -4,7 +4,7 @@ import styled from "styled-components"
 const Input = React.forwardRef((props, ref) => {
   return (
     <Wrapper>
-      <label htmlfor={props.input.id}>{props.label}</label>
+      <label htmlFor={props.input.id}>{props.label}</label>
       <input id={props.input.id} {...props.input} ref={ref}></input>
     </Wrapper>
   )
