@@ -3,6 +3,8 @@ import styled from "styled-components"
 import Card from "../UI/Card"
 import MealItem from "./MealItem"
 import { useEffect, useState } from "react"
+import Loading from "./Loading"
+import Error from "./Error"
 
 // const DUMMY_MEALS = [
 //   {
@@ -33,42 +35,55 @@ import { useEffect, useState } from "react"
 
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(false)
 
-  useEffect(() => {
-    const fetchMeals = async () => {
-      const response = await fetch(
-        "https://react-http-eb12d-default-rtdb.firebaseio.com/meals.json"
-      )
+  const fetchMeals = async () => {
+    const response = await fetch(
+      "https://react-http-eb12d-default-rtdb.firebaseio.com/meals.json"
+    )
 
-      const responseData = await response.json()
-      const loadedMeals = []
+    const responseData = await response.json()
+    const loadedMeals = []
 
-      for (const key in responseData) {
-        loadedMeals.push({
-          id: key,
-          name: responseData[key].name,
-          description: responseData[key].description,
-          price: responseData[key].price,
-        })
-      }
-
-      setMeals(loadedMeals)
+    for (const key in responseData) {
+      loadedMeals.push({
+        id: key,
+        name: responseData[key].name,
+        description: responseData[key].description,
+        price: responseData[key].price,
+      })
     }
 
-    fetchMeals()
+    setMeals(loadedMeals)
+    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    fetchMeals().catch((err) => {
+      setIsLoading(false)
+      setError(true)
+    })
   }, [])
 
-  const mealsList = meals.map((meal) => {
-    return (
-      <MealItem
-        key={meal.id}
-        id={meal.id}
-        name={meal.name}
-        description={meal.description}
-        price={meal.price}
-      />
-    )
-  })
+  const mealsList = meals.map((meal) => (
+    <MealItem
+      key={meal.id}
+      id={meal.id}
+      name={meal.name}
+      description={meal.description}
+      price={meal.price}
+    />
+  ))
+
+  if (error) {
+    return <Error />
+  }
+
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <Wrapper>
       <Card>
@@ -103,4 +118,9 @@ const Wrapper = styled.section`
       transform: translateY(0);
     }
   }
+
+  /* .MealsLoading {
+    text-align: center;
+    color: white;
+  } */
 `

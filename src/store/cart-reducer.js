@@ -1,4 +1,11 @@
 const CartReducer = (state, action) => {
+  if (action.type === "CLEAR") {
+    return {
+      items: [],
+      totalAmount: 0,
+    }
+  }
+
   if (action.type === "ADD") {
     const updatedTotalAmount =
       state.totalAmount + action.item.price * action.item.amount

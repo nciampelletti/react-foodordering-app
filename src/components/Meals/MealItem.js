@@ -35,7 +35,7 @@ export default MealItem
 
 const Wrapper = styled.li`
   display: flex;
-  justify-content: space-between;0
+  justify-content: space-between;
   margin: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #ccc;
