@@ -4,8 +4,6 @@ import { useRef, useState } from "react"
 
 const isEmpty = (value) => value.trim() === ""
 
-const isSixChars = (value) => value.trim().lenght === 6
-
 const Checkout = (props) => {
   const nameInput = useRef()
   const streetInput = useRef()
